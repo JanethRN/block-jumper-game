@@ -19,7 +19,8 @@ var isJumping = false;
 //creamos la variable jumpSpeed con valor 0
 var jumpSpeed = 0;
 
-
+//creamos la variable block
+var block;
 
 
 
@@ -30,6 +31,7 @@ function startGame() {
     gameCanvas.start();
     //llamamos la variable player y creamos un nuevo player
     player = new createPlayer(30, 30, 10);
+    block = new createBlock();
 }
 var gameCanvas = {
     //creamos el elemento canvas
@@ -102,4 +104,48 @@ function updateCanvas() {
     
     player.makeFall();
     player.draw();
+    player.jump();
+    
+    block.draw();
+    block.attackPlayer();
+}
+//creamos la función createBlock
+function createBlock() {
+    /*creamos una variable para el ancho con números predeterminados
+    creamos la variable con valor preseterminado para la altura
+    creamos una variable con valor predeterminado para la velocidad
+    
+    en la cuarta línea llamamos a nuestra variable x y llamamos la anchura de nuestro lienzo
+    en la quinta línea llamamos la variable y para la altura*/ 
+    var width = randomNumber(10, 50);
+    var height = randomNumber(10, 200);
+    var speed = randomNumber(2, 6);
+    
+
+    this.x = canvasWidth;
+    this.y = canvasHeight - height;
+    
+    //creamos la función draw
+    this.draw = function() {
+        ctx = gameCanvas.context;
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.x, this.y, width, height);
+    }
+    //creamos la función attackPlayer
+    this.attackPlayer = function() {
+        this.x -= speed;
+        this.returnToAttackPosition();
+    }
+    //creamos la función returnToAttackPosition
+    this.returnToAttackPosition = function() {
+        if (this.x < 0) {
+            width = randomNumber(10, 50);
+            height = randomNumber(50, 200);
+            speed = randomNumber(4, 6);
+            this.y = canvasHeight - height;
+            this.x = canvasWidth;
+            // Aumenta la puntuación si el bloque llegó al borde
+            score++;
+        }
+    }
 }
