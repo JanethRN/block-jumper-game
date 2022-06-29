@@ -13,6 +13,12 @@ var fallSpeed = 0;
 //creamos una variable denominada interval y llamamos a nuestra función updateCanvas() en esta variable
 var interval = setInterval(updateCanvas,20);
 
+//creamos una variable booleana llamada isJumping con valor false
+var isJumping = false;
+
+//creamos la variable jumpSpeed con valor 0
+var jumpSpeed = 0;
+
 
 
 
@@ -55,19 +61,31 @@ function createPlayer(width, height, x) {
     this.x = x;
     this.y = playerYPosition;
     
+    //creamos la función draw
     this.draw = function() {
         ctx = gameCanvas.context;
         ctx.fillStyle = "green";
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
+    //creamos la función makeFall
     this.makeFall = function() {
             this.y += fallSpeed;
             fallSpeed += 0.1;
+            //llamamos a la función stopPlayer
+            this.stopPlayer();
     }
+    //creamos la función stopPlayer
     this.stopPlayer = function() {
         var ground = canvasHeight - this.height;
         if (this.y > ground) {
             this.y = ground;
+        }
+    }
+    //creamos la función jump
+    this.jump = function() {
+        if (isJumping) {
+            this.y -= jumpSpeed;
+            jumpSpeed += 0.3;
         }
     }
 }
