@@ -1,0 +1,13 @@
+
+/*llamamos a nuestro id
+definimos color de borde solido y le damos un color de fondo
+*/
+canvas {
+    border: 2px solid black;
+    background-color:cadetblue;
+    
+}
+
+body{
+    background-color: bisque;
+}
